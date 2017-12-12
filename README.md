@@ -2,6 +2,8 @@
 
 ## Les commandes de base
 
+* `git status` : voir l'état du dépôt local
+
 * copier un repository sur notre machine (avec le lien HTTPS du dépôt) : `git clone lienFourniParGitHub `.  
 Attention à se placer au bon endroit sur le disque dur pour copier le reposity.
 
@@ -23,7 +25,8 @@ Pour ajouter tous les fichiers dans le répertoire courant, on peut utiliser la 
 -a demande à Git de mettre à jour les fichiers déjà existants dans son index
 
 * envoyer le code sur le dépôt distant : `git push` en se plaçant dans le repo local.  
-La commande complète est `git push [nom-distant] [nom-de-branche]`, par exemple `git push origin master` 
+Tous les commits du dépôt local sont envoyés vers le dépôt distant.
+La commande complète est `git push [nom-distant] [nom-de-branche]`, par exemple `git push origin master`
 
 * afficher la liste de tous les commits réalisés : `git log`
 
@@ -78,5 +81,7 @@ et choisir quel contenu garder, sauvegarder le fichier et revenir à la console.
 Une fois le conflit résolu, il faut le dire à dire en faisant un commit sans message (`git commit`), ce qui va permettre à Git
 de voir que le conflit est résolu et il va proposer un message par défaut qu'on peut personnaliser. On le sauvegarde en tapant `:x`.
 Git confirme ensuite que les branches sont fusionnés.
+
+* supprimer une branche : `git branch -d nom-branche`
 
 
