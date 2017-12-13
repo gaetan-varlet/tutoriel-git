@@ -62,10 +62,10 @@ Chaque commit est identifié grâce à un numéro hexadécimal de 40 caractères
 --stat pour un résumé plus court des commits.  
 Appuyer sur *Q* pour quitter
 
-*  `git checkout` a un double usage
- * `git checkout SHADuCommit` : se positionne sur un commit donnée ou dans une branche donnée.  
- revenir à la branche principale (commit le plus récent) : `git checkout master`
- * `git checkout nomFichier` : le fichier redeviendra comme il était lors du dernier commit
+* `git checkout` a un double usage  
+  * `git checkout SHADuCommit` : se positionne sur un commit donnée ou dans une branche donnée.  
+  revenir à la branche principale (commit le plus récent) : `git checkout master`
+  * `git checkout nomFichier` : le fichier redeviendra comme il était lors du dernier commit
 
 * `git revert SHADuCommit` : "annule un commit" en créant un nouveau commit qui fait l'inverse du précédent
 
