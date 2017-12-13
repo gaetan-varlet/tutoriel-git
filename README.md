@@ -1,15 +1,42 @@
-# tutoriel-git
+# Git, logiciel de gestion de versions
+
+## Introduction
+
+Un logiciel de gestion de version permet de suivre l'évolution d'un fichier texte ligne par ligne
+et garde les anciennes versions de chacun d'eux.  
+Il permet de savoir qui a effectué chaque modification, quand et pourquoi, il permet d'assembler (fusionner)
+des modifications si deux personnes ont travaillé sur le même fichier sans perdre d'information.
+
+### Logiciels centralisés versus logiciels distribués
+
+* **centralisés** : un serveur conserve l'historique des versions des fichiers et les utilisateurs ont sur leur poste
+uniquement la dernière version des fichiers
+  * exemple : CVS, SVN
+* **distribués** : il n'y a pas de serveur, chacun possède l'historique de l'évolution des fichiers. Les développeurs se transmettent
+chacun directement les modifications.  
+Dans la pratique, pour les logiciels distribués, on utilise souvent un serveur qui sert de point de rencontre et d'échange entre
+les utilisateurs, qui eux possèdent également l'historique des modifications
+  * exemple : Mercurial, Bazaar, Git
+
+Pour commencer à utiliser Git, on peut :
+* créer un nouveau dépôt, pour commencer un nouveau projet
+* cloner un dépôt existant, c'est-à-dire récupérer l'historique des changements d'un projet pour travailler dessus.
 
 ## Les commandes de base
 
-* `git status` : voir l'état du dépôt local
+* `git status` : permet de voir l'état du dépôt local, notamment voir les fichiers que l'on a récemment modfié
 
-* copier un repository sur notre machine (avec le lien HTTPS du dépôt) : `git clone lienFourniParGitHub `.  
+* `git diff` : permet de voir précisément ce qui a été modifié dans tous les fichiers où il y a eu des modifications,
+les lignes ajoutés sont précédés d'un +, les lignes supprimés précédés d'un -.  
+`git diff fichier` permet de ne voir les modifications que d'un fichier
+
+* `git init` : activer un dossier comme repository Git en se plaçant dans le dossier
+Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historique des fichiers et la configuration
+
+* `git clone lienFourniParGitHub ` : copie un repository sur notre machine en SSH ou en HTTPS, ici avec le lien HTTPS du dépôt.  
 Attention à se placer au bon endroit sur le disque dur pour copier le reposity.
 
-* récupérer des modifications : se mettre dans le dossier et utiliser la commande suivante `git pull`
-
-* activer un dossier comme repository Git en se plaçant dans le dossier : `git init`
+* `git pull` : récupère des modifications sur le serveur, penser à se mettre dans le dossier
 
 * ajouter un fichier à l'index Git.  
 Pour gérer un repository, Git génère un index de tous les fichiers dont il doit faire le suivi. 
@@ -18,59 +45,87 @@ Lorsque qu'on crée un fichier dans un repository, on doit donc l'ajouter à l'i
 Pour ajouter tous les fichiers dans le répertoire courant, on peut utiliser la commande suivante `git add .`
 
 * enregistrer des modifications : ` git commit -m "ajout du fichier nomFichier.extension"`. 
--m permet de décrire les modifications effectués
+-m permet de décrire les modifications effectués.
+Un commit est local, personne ne sait qu'il a été fait, ce qui donne la possibilité de l'annuler.
 
-* faire un commit d'un fichier qui a déjà été modifié (qui est déjà dans l'index Git) sans faire `git add .` : 
+* faire un commit d'un fichier qui a déjà été modifié (qui est déjà dans l'index Git) sans faire `git add .` :
 `git commit -a -m "modification du fichier nomFichier.extension"`. 
 -a demande à Git de mettre à jour les fichiers déjà existants dans son index
 
-* envoyer le code sur le dépôt distant : `git push` en se plaçant dans le repo local.  
+* `git push` envoie le code sur le dépôt distant. Il faut se positonner dans le repo local.  
 Tous les commits du dépôt local sont envoyés vers le dépôt distant.
 La commande complète est `git push [nom-distant] [nom-de-branche]`, par exemple `git push origin master`
 
-* afficher la liste de tous les commits réalisés : `git log`
+* `git log` : afficher la liste de tous les commits réalisés.  
+Chaque commit est identifié grâce à un numéro hexadécimal de 40 caractères nommé *SHA-1*.  
+-p pour le détail de chaque ligne ajoutée ou retirée.  
+--stat pour un résumé plus court des commits.  
+Appuyer sur *Q* pour quitter
 
-* se positionner sur un commit donnée `git checkout SHADuCommit`.  
-revenir à la branche principale (commit le plus récent) : `git checkout master`
+*  `git checkout` a un double usage
+ * `git checkout SHADuCommit` : se positionne sur un commit donnée ou dans une branche donnée.  
+ revenir à la branche principale (commit le plus récent) : `git checkout master`
+ * `git checkout nomFichier` : le fichier redeviendra comme il était lors du dernier commit
 
-* "annuler un commit" en créant un nouveau commit qui fait l'inverse du précédent : `git revert SHADuCommit`
+* `git revert SHADuCommit` : "annule un commit" en créant un nouveau commit qui fait l'inverse du précédent
 
-* modifier le message du dernier commit s'il n'a pas encore été pushé : `git commit --amend -m "nouveau message"`
+* `git commit --amend -m "nouveau message"` : modifie le message du dernier commit s'il n'a pas encore été pushé
 
-* annuler tous les changements depuis le dernier commit : `git reset --hard`
+* `git reset HEAD^` : annule le dernier commit et revient à l'avant-dernier.  
+Pour savoir à quel commit revenir, `HEAD` pour le dernier, `HEAD^` pour l'avant-dernier, `HEAD^^` ou `HEAD~2`
+pour l'avant-avant-dernier, ou la clé SHA-1 du commit précis.  
+Seul le commit est retiré de Git, les fichiers eux, restent modifiés. On peut alors les remodifier et refaire un commit
 
-* lister les modifications faites sur un fichier et qui les a fait quand : `git blame nomDuFichier.extension`.  
+* `git reset --hard` : annuler tous les changements depuis le dernier commit **et**
+les changements effectués dans les fichiers.  
+
+
+
+* `git blame nomDuFichier.extension` liste les modifications faites sur un fichier et qui les a fait quand.  
 Pour savoir pourqoi cette modificaiton a été faite :
   * `git log` avec le SHA du commit
   * `git show debutDuSHA` qui renvoie les détails du commit
 
-* ignorer des fichiers : créer le fichier **.gitignore** et y lister ligne par ligne
-les fichiers qu'on ne veut pas versionner dans Git, en indiquant leurs chemins complets. Par exemple :
-```
-motsdepasse.txt
-config/application.yml
-```
-
-* mettre de côté une modification en cours sans faire de commit, pour par exemple aller dans une autre branche : `git stash`.  
+* `git stash` met de côté une modification en cours sans faire de commit, pour par exemple aller dans une autre branche.  
+A ce moment `git status` ne doit plus afficher aucun fichier en cours de modification.
 Pour reprendre lors du retour dans la branche et récupérer les modifications mises de côté, faire `git stash pop`.  
 Attention, **pop** cide le stash des modifications qu'on a mis dedans. Si on veut garder les modifications dans le stash,
-on peut utiliser à la place `git stash apply`
+on peut utiliser à la place `git stash apply`.  
+Si on change de branche avec des changements "non commités", les fichiers modifiés resteront comme ils étaient dans
+la nouvelle branche, ce qui n'est pas ce qu'on souhaite en général.
 
-* voir la liste des dépôts distants : `git remote -v`.  
+* `git remote -v` : voir la liste des dépôts distants.    
 Il doit au moins y avoir `origin`, qui est le nom par défaut donné par Git au serveur
 à partir duquel on a cloné le projet.  
 -v permet d'afficher l'URL que Git a stocké pour chaque nom court
 
+* `git tag` permet de lister les tags existants.  
+`git tag nomTag idCommit` ajoute un tag sur un commit, par exemple `git tag v1.3 2f7c8b3428aca535fdc970feeb4c09efa33d809e`.  
+`git show v1.3` permet de voir à quoi correspond cette version.  
+Un tag n'est pas envoyé lors d'un push, il faut le préciser avec l'option --tags : `git push --tags`.  
+`git tag -d NOMTAG` permet de supprimer un tag créer.  
+
+* ignorer des fichiers : créer le fichier **.gitignore** et y lister ligne par ligne
+les fichiers qu'on ne veut pas versionner dans Git, en indiquant leurs chemins complets.
+Il est possible d'utiliser une étoile comme joker. Par exemple :
+```
+motsdepasse.txt
+config/application.yml
+*.tmp
+cache/*
+```
 
 ## Les branches
 
 Lors de l'initialisation du repo Git, le code est par défaut dans la branche principale appelée **master**
 
-* voir la liste des branches (une étoile est placée devant la branche dans laquelle on est) : `git branch`
+* `git branch` affiche la liste des branches (une étoile est placée devant la branche dans laquelle on est)
 
-* créer une nouvelle branche : `git branch nouvelle-branche`
+* `git branch nouvelle-branche` crée une nouvelle branche
+une branche créée est locale, il est ensuite possible de la publier
 
-* pour se placer dans une autre branche à l'intérieur du repo : `git checkout nouvelle-branche`
+* `git checkout nouvelle-branche`   permet de se placer dans une autre branche à l'intérieur du repo
+A noter que lorsqu'on fait `git log`, on ne voit que les commits effectués sur la branche sur laquelle on se trouve
 
 * fusionner des branches, par exemple ajouter dans une brancheA les mises à jour faites dans une branche B.
 On se place dans A (`git checkout brancheA`) et on fusionne : `git merge brancheB`
@@ -83,5 +138,3 @@ de voir que le conflit est résolu et il va proposer un message par défaut qu'o
 Git confirme ensuite que les branches sont fusionnés.
 
 * supprimer une branche : `git branch -d nom-branche`
-
-
