@@ -89,7 +89,7 @@ Pour savoir pourqoi cette modificaiton a été faite :
 * `git stash` met de côté une modification en cours sans faire de commit, pour par exemple aller dans une autre branche.  
 A ce moment `git status` ne doit plus afficher aucun fichier en cours de modification.
 Pour reprendre lors du retour dans la branche et récupérer les modifications mises de côté, faire `git stash pop`.  
-Attention, **pop** cide le stash des modifications qu'on a mis dedans. Si on veut garder les modifications dans le stash,
+Attention, **pop** vide le stash des modifications qu'on a mis dedans. Si on veut garder les modifications dans le stash,
 on peut utiliser à la place `git stash apply`.  
 Si on change de branche avec des changements "non commités", les fichiers modifiés resteront comme ils étaient dans
 la nouvelle branche, ce qui n'est pas ce qu'on souhaite en général.
@@ -124,6 +124,8 @@ Lors de l'initialisation du repo Git, le code est par défaut dans la branche pr
 * `git branch nouvelle-branche` crée une nouvelle branche
 une branche créée est locale, il est ensuite possible de la publier
 
+* `git push origin nouvelle-branche` publie la nouvelle branche sur sur le remote
+
 * `git checkout nouvelle-branche`   permet de se placer dans une autre branche à l'intérieur du repo
 A noter que lorsqu'on fait `git log`, on ne voit que les commits effectués sur la branche sur laquelle on se trouve
 
@@ -137,6 +139,6 @@ Une fois le conflit résolu, il faut le dire à dire en faisant un commit sans m
 de voir que le conflit est résolu et il va proposer un message par défaut qu'on peut personnaliser. On le sauvegarde en tapant `:x`.
 Git confirme ensuite que les branches sont fusionnés.
 
-* supprimer une branche locale : `git branch -d nom-branche`
+* `git branch -d nom-branche` supprime une branche locale 
 
-* supprimer une branche sur le remote : `git push -d origin  nom-branche`
+* `git push -d origin  nom-branche` supprime une branche sur le remote
