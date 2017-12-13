@@ -137,4 +137,6 @@ Une fois le conflit résolu, il faut le dire à dire en faisant un commit sans m
 de voir que le conflit est résolu et il va proposer un message par défaut qu'on peut personnaliser. On le sauvegarde en tapant `:x`.
 Git confirme ensuite que les branches sont fusionnés.
 
-* supprimer une branche : `git branch -d nom-branche`
+* supprimer une branche locale : `git branch -d nom-branche`
+
+* supprimer une branche sur le remote : `git push -d origin  nom-branche`
