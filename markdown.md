@@ -1,14 +1,14 @@
 # Markdown, langage de balisage léger
 
 ### Paragraphes
-Ceci est un paragraphe de texte.
-
-Ceci est un autre paragraphe de texte !
 ```
 Ceci est un paragraphe de texte.
 
 Ceci est un autre paragraphe de texte !
 ```
+Ceci est un paragraphe de texte.
+
+Ceci est un autre paragraphe de texte !
 
 ### Le retour à la ligne
 Ligne sans espace à la fin.
@@ -94,7 +94,7 @@ On peut aussi mettre des listes dans les citations :
 ```
 
 ### Bloc de code
-Voici un code en Java :
+Voici comment écrire un bloc de code en Java :
 ````java
 ```java
 int main(){
@@ -103,6 +103,13 @@ int main(){
 }
 ```
 ````
+
+```java
+int main(){
+  System.out.println("Hello world!\n");
+  return 0;
+}
+```
 
 ### Code en ligne
 `System.out.println()` permet d'afficher du texte en Java
