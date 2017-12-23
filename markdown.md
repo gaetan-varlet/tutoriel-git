@@ -23,11 +23,6 @@ Voici des mots **très importants**, j'insiste !
 ```
 
 ### Les titres
-# Titre de niveau 1
-
-## Titre de niveau 2
-
-### Titre de niveau 3
 ```
 # Titre de niveau 1
 
@@ -37,6 +32,7 @@ Voici des mots **très importants**, j'insiste !
 ```
 
 ### Les listes à puces
+
 - Une puce
 - Une autre puce
 - Et encore une autre puce !
@@ -47,6 +43,7 @@ Voici des mots **très importants**, j'insiste !
 ```
 
 ### Les listes à puces numérotées
+
 1. Et de un
 2. Et de deux
 3. Et de trois
@@ -68,10 +65,9 @@ Voici des mots **très importants**, j'insiste !
 
 ### Bloc de code
 Voici un code en Java :
-```
-\```
-int main()
-{
+``` java
+\``` java
+int main(){
   printf("Hello world!\n");
   return 0;
 }
