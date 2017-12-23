@@ -149,7 +149,7 @@ Le titre entre guillemets est lu par les navigateurs textuels et affiché au sur
 
 ### Echappement des caractères
 
-Pour afficher les caractères suivants, il faut les échapper avec un antislash \\ :
+Pour afficher les caractères suivants, il faut les échapper avec un antislash `\` :
 ```
 \   backslash
 `   backtick
