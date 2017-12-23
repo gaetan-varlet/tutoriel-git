@@ -53,6 +53,16 @@ Voici des mots **très importants**, j'insiste !
 - Et encore une autre puce !
 ```
 
+### Les listes à cocher
+- [x] Finish my changes
+- [ ] Push my commits to GitHub
+- [ ] Open a pull request
+```
+- [x] Finish my changes
+- [ ] Push my commits to GitHub
+- [ ] Open a pull request
+```
+
 ### Les listes à puces numérotées
 1. Et de un
 2. Et de deux
@@ -135,26 +145,6 @@ Le titre entre guillemets est lu par les navigateurs textuels et affiché au sur
 | Line 2        |        2        |      value |
 | 3 Online      |        3        |      value |
 
-```
-
-### Séparer des blocs
-
-> Citation 1
-
-> Citation 2
-```
-> Citation 1
-
-> Citation 2
-```
-
-> Citation 1
-<!-- -->
-> Citation 2
-```
-> Citation 1
-<!-- -->
-> Citation 2
 ```
 
 ### Echappement des caractères
