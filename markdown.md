@@ -95,7 +95,7 @@ On peut aussi mettre des listes dans les citations :
 
 ### Bloc de code
 ```java
-int main(){
+public int calcul(){
   System.out.println("Hello world!\n");
   return 0;
 }
@@ -104,7 +104,7 @@ int main(){
 Voici comment écrire ce bloc de code :
 ````java
 ```java
-int main(){
+public int calcul(){
   System.out.println("Hello world!\n");
   return 0;
 }
@@ -128,7 +128,7 @@ Rendez-vous sur le [Site du Zéro](http://www.siteduzero.com) pour tout 
 ![Google logo](https://www.google.fr/images/srpr/logo11w.png "google logo")
 ```
 Le texte entre crochets est affiché si l'image n'est pas chargée.  
-Le titre entre guillemets est lu par les navigateurs textuels et affiché au survol de l'image
+Le titre entre guillemets est lu par les navigateurs textuels et affiché au survol de l'image. Il est facultatif.
 
 ![Google logo](https://www.google.fr/images/srpr/logo11w.png "google logo")
 
@@ -167,7 +167,7 @@ Les pipes de gauche et de droite ne sont pas obligatoires.
 | Pipe         | \|             | **en gras**   |
 
 ### Echappement des caractères
-Pour afficher les caractères suivants, il faut les échapper avec un antislash `\` :
+Pour afficher les caractères suivants, il faut les échapper avec un antislash (`\`) :
 ```
 \   backslash
 `   backtick

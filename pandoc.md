@@ -2,8 +2,6 @@
 
 Il faut installer commencer par installer [pandoc](http://pandoc.org/), puis installer un moteur LaTeX, par exemple [MiKTeX](https://miktex.org/), pour générer des PDF.
 
-
-
 ## Exemples de commandes :
 `[...]` : code optionnel
 
