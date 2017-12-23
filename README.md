@@ -33,28 +33,32 @@ les lignes ajoutés sont précédés d'un +, les lignes supprimés précédés d
 * `git init` : activer un dossier comme repository Git en se plaçant dans le dossier
 Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historique des fichiers et la configuration
 
+* `git remote add origin https://github.com/nomutilisateur/MonProjet.git` : permet de connecter le dépôt local au dépôt distant après le `git init`
+
 * `git clone lienFourniParGitHub ` : copie un repository sur notre machine en SSH ou en HTTPS, ici avec le lien HTTPS du dépôt.  
 Attention à se placer au bon endroit sur le disque dur pour copier le reposity.
 
 * `git pull` : récupère des modifications sur le serveur, penser à se mettre dans le dossier
 
 * ajouter un fichier à l'index Git.  
-Pour gérer un repository, Git génère un index de tous les fichiers dont il doit faire le suivi. 
-Lorsque qu'on crée un fichier dans un repository, on doit donc l'ajouter à l'index Git à l'aide de la commande suivante 
-`git add nomFichier.extension`. 
+Pour gérer un repository, Git génère un index de tous les fichiers dont il doit faire le suivi.
+Lorsque qu'on crée un fichier dans un repository, on doit donc l'ajouter à l'index Git à l'aide de la commande suivante
+`git add nomFichier.extension`.
 Pour ajouter tous les fichiers dans le répertoire courant, on peut utiliser la commande suivante `git add .`
 
-* enregistrer des modifications : ` git commit -m "ajout du fichier nomFichier.extension"`. 
+* enregistrer des modifications : ` git commit -m "ajout du fichier nomFichier.extension"`.
 -m permet de décrire les modifications effectués.
 Un commit est local, personne ne sait qu'il a été fait, ce qui donne la possibilité de l'annuler.
 
 * faire un commit d'un fichier qui a déjà été modifié (qui est déjà dans l'index Git) sans faire `git add .` :
-`git commit -a -m "modification du fichier nomFichier.extension"`. 
+`git commit -a -m "modification du fichier nomFichier.extension"`.
 -a demande à Git de mettre à jour les fichiers déjà existants dans son index
 
 * `git push` envoie le code sur le dépôt distant. Il faut se positonner dans le repo local.  
 Tous les commits du dépôt local sont envoyés vers le dépôt distant.
-La commande complète est `git push [nom-distant] [nom-de-branche]`, par exemple `git push origin master`
+La commande complète est `git push [nom-distant] [nom-de-branche]`, par exemple `git push origin master`.  
+Lors du premier push, si on est passé par un `git init` et `git remote add origin`, il faut associer la branche master locale avec la branche master du remote en faisant `git push --set-upstream origin master`. Après cela, on peut faire un simple `git push`, sinon on est obligé de faire `git push origin master`.  
+Si on a fait `git clone lienFourniParGitHub` pour récupérer un projet existant, l'association est déjà faite, on peut directement faire `git push`
 
 * `git log` : afficher la liste de tous les commits réalisés.  
 Chaque commit est identifié grâce à un numéro hexadécimal de 40 caractères nommé *SHA-1*.  
@@ -82,7 +86,7 @@ les changements effectués dans les fichiers.
 
 
 * `git blame nomDuFichier.extension` liste les modifications faites sur un fichier et qui les a fait quand.  
-Pour savoir pourqoi cette modificaiton a été faite :
+Pour savoir pourquoi cette modificaiton a été faite :
   * `git log` avec le SHA du commit
   * `git show debutDuSHA` qui renvoie les détails du commit
 
@@ -124,7 +128,8 @@ Lors de l'initialisation du repo Git, le code est par défaut dans la branche pr
 * `git branch nouvelle-branche` crée une nouvelle branche
 une branche créée est locale, il est ensuite possible de la publier
 
-* `git push origin nouvelle-branche` publie la nouvelle branche sur sur le remote
+* `git push --set-upstream origin nouvelle-branche` publie la nouvelle branche sur le remote.  
+L'option --set-upstream permet de dire à Git de se souvenir qu'un « git push » de notre branche « nouvelle-branche » envoie les changements à la branche « nouvelle-branche » du dépôt distant. Le prochain push pourra donc se faire simplement avec un `git push`
 
 * `git checkout nouvelle-branche`   permet de se placer dans une autre branche à l'intérieur du repo
 A noter que lorsqu'on fait `git log`, on ne voit que les commits effectués sur la branche sur laquelle on se trouve
@@ -139,6 +144,6 @@ Une fois le conflit résolu, il faut le dire à dire en faisant un commit sans m
 de voir que le conflit est résolu et il va proposer un message par défaut qu'on peut personnaliser. On le sauvegarde en tapant `:x`.
 Git confirme ensuite que les branches sont fusionnés.
 
-* `git branch -d nom-branche` supprime une branche locale 
+* `git branch -d nom-branche` supprime une branche locale
 
 * `git push -d origin  nom-branche` supprime une branche sur le remote
