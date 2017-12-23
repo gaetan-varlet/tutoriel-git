@@ -53,7 +53,7 @@ Voici des mots **très importants**, j'insiste !
 - Et encore une autre puce !
 ```
 
-### Les listes à cocher
+### Les listes de tâches
 - [x] Finish my changes
 - [ ] Push my commits to GitHub
 - [ ] Open a pull request
@@ -148,3 +148,19 @@ Le titre entre guillemets est lu par les navigateurs textuels et affiché au sur
 ```
 
 ### Echappement des caractères
+
+Pour afficher les caractères suivants, il faut les échapper avec un antislash \\ :
+```
+\   backslash
+`   backtick
+*   asterisk
+_   underscore
+{}  curly braces
+[]  square brackets
+()  parentheses
+#   hash mark
++   plus sign
+-   minus sign (hyphen)
+.   dot
+!   exclamation mark
+```
