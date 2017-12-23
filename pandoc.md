@@ -7,6 +7,7 @@ Il faut installer commencer par installer [pandoc](http://pandoc.org/), puis ins
 ## Exemples de commandes :
 `[...]` : code optionnel
 
+### Markdown vers Formats divers
 - convertir un fichier markdown en PDF (avec coloration syntaxique du code) : `pandoc input.md [--toc] -o output.pdf`
 - convertir un fichier markdown en odt : `pandoc input.md -o output.odt`
 - convertir un fichier markdown en docx : `pandoc input.md -o output.docx`
@@ -18,5 +19,6 @@ Il faut installer commencer par installer [pandoc](http://pandoc.org/), puis ins
 `pandoc -t beamer input.md -o beamer.pdf`
 - convertir un fichier markdown en présentation HTML/JavaScript avec reveal.js : `pandoc -t revealjs -s input.md -o presentation.html`
 
+### Formats divers vers Markdown
 - convertir un fichier ODT en markdown : `pandoc input.odt -o output.md`
 - convertir un fichier DOCX en markdown : `pandoc input.docx -o output.md`
