@@ -63,14 +63,14 @@ Voici des mots **très importants**, j'insiste !
 
 ### Bloc de code
 Voici un code en Java :
-``` java
-\``` java
+````java
+```java
 int main(){
   printf("Hello world!\n");
   return 0;
 }
-\```
 ```
+````
 
 ### Code en ligne
 `System.out.println()` permet d'afficher du texte en Java
