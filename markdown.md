@@ -10,6 +10,18 @@ Ceci est un paragraphe de texte.
 Ceci est un autre paragraphe de texte !
 ```
 
+### Le retour à la ligne
+Ligne sans espace à la fin.
+Ligne avec un espace à la fin.
+Ligne avec 2 espaces à la fin.  
+Troisième ligne.
+```
+Ligne sans espace à la fin.
+Ligne avec un espace à la fin.
+Ligne avec 2 espaces à la fin.  
+Troisième ligne.
+```
+
 ### Emphase faible (italique)
 Voici un mot *important* à mon sens
 ```
@@ -33,7 +45,7 @@ Voici des mots **très importants**, j'insiste !
 
 ### Les listes à puces
 - Une puce
-- Une autre puce 
+- Une autre puce
 - Et encore une autre puce !
 ```
 - Une puce
@@ -56,9 +68,19 @@ Voici des mots **très importants**, j'insiste !
 > à cette citation en écrivant un paragraphe
 > normal juste en-dessous !
 ```
-> Ceci est un texte cité. Vous pouvez répondre
-> à cette citation en écrivant un paragraphe
-> normal juste en-dessous !
+> Ceci est un texte cité.
+> Vous pouvez répondre à cette citation en écrivant un paragraphe normal juste en-dessous !
+```
+
+On peut aussi mettre des listes dans les citations :
+
+> **Note:**
+> - StackEdit is accessible offline after the application has been loaded for the first time.
+> - Your local documents are not shared between different browsers or computers.
+```
+> **Note:**
+> - StackEdit is accessible offline after the application has been loaded for the first time.
+> - Your local documents are not shared between different browsers or computers.
 ```
 
 ### Bloc de code
@@ -66,7 +88,7 @@ Voici un code en Java :
 ````java
 ```java
 int main(){
-  printf("Hello world!\n");
+  System.out.println("Hello world!\n");
   return 0;
 }
 ```
@@ -99,11 +121,40 @@ Le titre entre guillemets est lu par les navigateurs textuels et affiché au sur
 ```
 
 ### Les tableaux
+
+| Header 1      |     2 header    |   header 3 |
+| ------------- |: -------------: | ---------: |
+| 1 Online      |        1        |      value |
+| Line 2        |        2        |      value |
+| 3 Online      |        3        |      value |
+
 ```
+| Header 1      |     2 header    |   header 3 |
+| ------------- |: -------------: | ---------: |
+| 1 Online      |        1        |      value |
+| Line 2        |        2        |      value |
+| 3 Online      |        3        |      value |
 
 ```
 
-###
+### Séparer des blocs
+
+> Citation 1
+
+> Citation 2
+```
+> Citation 1
+
+> Citation 2
 ```
 
+> Citation 1
+<!-- -->
+> Citation 2
 ```
+> Citation 1
+<!-- -->
+> Citation 2
+```
+
+### Echappement des caractères
