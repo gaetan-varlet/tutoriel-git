@@ -32,10 +32,9 @@ Voici des mots **très importants**, j'insiste !
 ```
 
 ### Les listes à puces
-
-- Une puce
-- Une autre puce
-- Et encore une autre puce !
+- Une puce
+- Une autre puce 
+- Et encore une autre puce !
 ```
 - Une puce
 - Une autre puce
@@ -43,10 +42,9 @@ Voici des mots **très importants**, j'insiste !
 ```
 
 ### Les listes à puces numérotées
-
-1. Et de un
-2. Et de deux
-3. Et de trois
+1. Et de un
+2. Et de deux
+3. Et de trois
 ```
 1. Et de un
 2. Et de deux
