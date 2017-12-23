@@ -1,4 +1,4 @@
-# Pandoc, un convertisseur de document universel
+# Pandoc, convertisseur de document universel
 
 Il faut installer commencer par installer [pandoc](http://pandoc.org/), puis installer un moteur LaTeX, par exemple [MiKTeX](https://miktex.org/), pour générer des PDF.
 
