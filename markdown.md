@@ -37,10 +37,10 @@ Voici des mots **très importants**, j'insiste !
 ### Les titres
 ```
 # Titre de niveau 1
-
 ## Titre de niveau 2
-
 ### Titre de niveau 3
+...
+###### Titre de niveau 6
 ```
 
 ### Les listes à puces
@@ -119,6 +119,7 @@ Rendez-vous sur le [Site du Zéro](http://www.siteduzero.com) pour tout 
 ### Les images
 Le texte entre crochets est affiché si l'image n'est pas chargée.  
 Le titre entre guillemets est lu par les navigateurs textuels et affiché au survol de l'image
+
 ![Google logo](https://www.google.fr/images/srpr/logo11w.png "google logo")
 ```
 ![Google logo](https://www.google.fr/images/srpr/logo11w.png "google logo")
@@ -132,19 +133,22 @@ Le titre entre guillemets est lu par les navigateurs textuels et affiché au sur
 
 ### Les tableaux
 
-| Header 1      |     2 header    |   header 3 |
-| ------------- |: -------------: | ---------: |
-| 1 Online      |        1        |      value |
-| Line 2        |        2        |      value |
-| 3 Online      |        3        |      value |
+Les pipes de gauche et de droite ne sont pas obligatoires.
+
+| Left-aligned | Center-aligned | Right-aligned |
+| :---         |     :---:      |          ---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
+| Backtick     | `              | `int a = 5`   |
+| Pipe         | \|             | **en gras**   |
 
 ```
-| Header 1      |     2 header    |   header 3 |
-| ------------- |: -------------: | ---------: |
-| 1 Online      |        1        |      value |
-| Line 2        |        2        |      value |
-| 3 Online      |        3        |      value |
-
+| Left-aligned | Center-aligned | Right-aligned |
+| :---         |     :---:      |          ---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
+| Backtick     | `              | `int a = 5`   |
+| Pipe         | \|             | **en gras**   |
 ```
 
 ### Echappement des caractères
@@ -163,4 +167,13 @@ _   underscore
 -   minus sign (hyphen)
 .   dot
 !   exclamation mark
+```
+
+### Les émoticônes
+
+On peut ajouter des émoticônes en écrivant :EMOJICODE:, [cliquez ici pour voir la liste](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
+
+:arrow_forward: [Lancer le diaporama]()
+```
+:arrow_forward: [Lancer le diaporama]()
 ```
