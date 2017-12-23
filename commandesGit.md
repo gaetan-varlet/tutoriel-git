@@ -7,7 +7,7 @@ et garde les anciennes versions de chacun d'eux.
 Il permet de savoir qui a effectué chaque modification, quand et pourquoi, il permet d'assembler (fusionner)
 des modifications si deux personnes ont travaillé sur le même fichier sans perdre d'information.
 
-### Logiciels centralisés versus logiciels distribués
+## Logiciels centralisés versus logiciels distribués
 
 * **centralisés** : un serveur conserve l'historique des versions des fichiers et les utilisateurs ont sur leur poste
 uniquement la dernière version des fichiers
@@ -24,19 +24,10 @@ Pour commencer à utiliser Git, on peut :
 
 ## Les commandes de base
 
-* `git status` : permet de voir l'état du dépôt local, notamment voir les fichiers que l'on a récemment modfié
-
-* `git diff` : permet de voir précisément ce qui a été modifié dans tous les fichiers où il y a eu des modifications,
-les lignes ajoutés sont précédés d'un +, les lignes supprimés précédés d'un -.  
-`git diff fichier` permet de ne voir les modifications que d'un fichier
-
-* `git init` : activer un dossier comme repository Git en se plaçant dans le dossier
-Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historique des fichiers et la configuration
-
-* `git remote add origin https://github.com/nomutilisateur/MonProjet.git` : permet de connecter le dépôt local au dépôt distant après le `git init`
-
-* `git clone lienFourniParGitHub ` : copie un repository sur notre machine en SSH ou en HTTPS, ici avec le lien HTTPS du dépôt.  
+* `git clone lienFourniParGitHub ` : copie un repository depuis un serveur sur notre machine en SSH ou en HTTPS, ici avec le lien HTTPS du dépôt.  
 Attention à se placer au bon endroit sur le disque dur pour copier le reposity.
+
+* `git status` : permet de voir l'état du dépôt local, notamment voir les fichiers que l'on a récemment modfié
 
 * `git pull` : récupère des modifications sur le serveur, penser à se mettre dans le dossier
 
@@ -57,8 +48,13 @@ Un commit est local, personne ne sait qu'il a été fait, ce qui donne la possib
 * `git push` envoie le code sur le dépôt distant. Il faut se positonner dans le repo local.  
 Tous les commits du dépôt local sont envoyés vers le dépôt distant.
 La commande complète est `git push [nom-distant] [nom-de-branche]`, par exemple `git push origin master`.  
-Lors du premier push, si on est passé par un `git init` et `git remote add origin`, il faut associer la branche master locale avec la branche master du remote en faisant `git push --set-upstream origin master`. Après cela, on peut faire un simple `git push`, sinon on est obligé de faire `git push origin master`.  
-Si on a fait `git clone lienFourniParGitHub` pour récupérer un projet existant, l'association est déjà faite, on peut directement faire `git push`
+
+
+## Les commandes "avancées"
+
+* `git diff` : permet de voir précisément ce qui a été modifié dans tous les fichiers où il y a eu des modifications,
+les lignes ajoutés sont précédés d'un +, les lignes supprimés précédés d'un -.  
+`git diff fichier` permet de ne voir les modifications que d'un fichier
 
 * `git log` : afficher la liste de tous les commits réalisés.  
 Chaque commit est identifié grâce à un numéro hexadécimal de 40 caractères nommé *SHA-1*.  
@@ -82,8 +78,6 @@ Seul le commit est retiré de Git, les fichiers eux, restent modifiés. On peut 
 
 * `git reset --hard` : annuler tous les changements depuis le dernier commit **et**
 les changements effectués dans les fichiers.  
-
-
 
 * `git blame nomDuFichier.extension` liste les modifications faites sur un fichier et qui les a fait quand.  
 Pour savoir pourquoi cette modificaiton a été faite :
@@ -119,6 +113,24 @@ config/application.yml
 cache/*
 ```
 
+## Créer un nouveau projet
+
+* `git init` : activer un dossier comme repository Git en se plaçant dans le dossier
+Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historique des fichiers et la configuration
+
+* `git remote add origin https://github.com/nomutilisateur/MonProjet.git` : permet de connecter le dépôt local au dépôt distant après le `git init` que l'on vient de créer vide sur GitHub.
+
+* `git branch --set-upstream-to=origin/master` permet d'associer la branche master locale à la branche master du remote
+
+* `git pull` pour récupérer les éventuels fichiers créé avec le projet (README.md et .gitignore). S'il n'y a pas de fichier .gitignore, il faut en créer un pour lister tous les fichiers qui ne doivent pas être versionné.
+
+* `git add .` pour ajouter à l'index Git tous les fichiers créés ou modifiés
+
+* `git commit -m "premier commit du projet"` : crée une version du projet
+
+* `git push` : Lors du premier push, il faut associer la branche master locale avec la branche master du remote. Si la commande `git branch --set-upstream-to=origin/master` n'a pas été utilisé, on peut aussi faire lors du premier push `git push --set-upstream origin master`. Après cela, on peut faire un simple `git push`, sinon on est obligé de faire `git push origin master`
+
+
 ## Les branches
 
 Lors de l'initialisation du repo Git, le code est par défaut dans la branche principale appelée **master**
@@ -137,12 +149,8 @@ A noter que lorsqu'on fait `git log`, on ne voit que les commits effectués sur 
 * fusionner des branches, par exemple ajouter dans une brancheA les mises à jour faites dans une branche B.
 On se place dans A (`git checkout brancheA`) et on fusionne : `git merge brancheB`
 
-* résoudre les conflits : si en fusionnant Git signale qu'il y a un conflit,
-il faut ouvrir le fichier en question dans l'éditeur de texte, par exemple Vim (`vim nomFichier.extension`),
-et choisir quel contenu garder, sauvegarder le fichier et revenir à la console.  
-Une fois le conflit résolu, il faut le dire à dire en faisant un commit sans message (`git commit`), ce qui va permettre à Git
-de voir que le conflit est résolu et il va proposer un message par défaut qu'on peut personnaliser. On le sauvegarde en tapant `:x`.
-Git confirme ensuite que les branches sont fusionnés.
+* résoudre les conflits : si en fusionnant Git signale qu'il y a un conflit, il faut ouvrir le fichier en question dans l'éditeur de texte, par exemple Vim (`vim nomFichier.extension`), et choisir quel contenu garder, sauvegarder le fichier et revenir à la console.  
+Une fois le conflit résolu, il faut le dire à dire en faisant un commit sans message (`git commit`), ce qui va permettre à Git de voir que le conflit est résolu et il va proposer un message par défaut qu'on peut personnaliser. On le sauvegarde en tapant `:x`. Git confirme ensuite que les branches sont fusionnés.
 
 * `git branch -d nom-branche` supprime une branche locale
 
