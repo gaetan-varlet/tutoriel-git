@@ -1,11 +1,13 @@
 # Git, logiciel de gestion de versions
 
+
 ## Introduction
 
 Un logiciel de gestion de version permet de suivre l'évolution d'un fichier texte ligne par ligne
 et garde les anciennes versions de chacun d'eux.  
 Il permet de savoir qui a effectué chaque modification, quand et pourquoi, il permet d'assembler (fusionner)
 des modifications si deux personnes ont travaillé sur le même fichier sans perdre d'information.
+
 
 ## Logiciels centralisés versus logiciels distribués
 
@@ -21,6 +23,7 @@ les utilisateurs, qui eux possèdent également l'historique des modifications
 Pour commencer à utiliser Git, on peut :
 * créer un nouveau dépôt, pour commencer un nouveau projet
 * cloner un dépôt existant, c'est-à-dire récupérer l'historique des changements d'un projet pour travailler dessus.
+
 
 ## Les commandes de base
 
@@ -48,6 +51,24 @@ Un commit est local, personne ne sait qu'il a été fait, ce qui donne la possib
 * `git push` envoie le code sur le dépôt distant. Il faut se positonner dans le repo local.  
 Tous les commits du dépôt local sont envoyés vers le dépôt distant.
 La commande complète est `git push [nom-distant] [nom-de-branche]`, par exemple `git push origin master`.  
+
+
+## Créer un nouveau projet
+
+* `git init` : activer un dossier comme repository Git en se plaçant dans le dossier
+Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historique des fichiers et la configuration
+
+* `git remote add origin https://github.com/nomutilisateur/MonProjet.git` : permet de connecter le dépôt local au dépôt distant après le `git init` que l'on vient de créer vide sur GitHub.
+
+* `git branch --set-upstream-to=origin/master` permet d'associer la branche master locale à la branche master du remote
+
+* `git pull` pour récupérer les éventuels fichiers créé avec le projet (README.md et .gitignore). S'il n'y a pas de fichier .gitignore, il faut en créer un pour lister tous les fichiers qui ne doivent pas être versionné.
+
+* `git add .` pour ajouter à l'index Git tous les fichiers créés ou modifiés
+
+* `git commit -m "premier commit du projet"` : crée une version du projet
+
+* `git push` : Lors du premier push, il faut associer la branche master locale avec la branche master du remote. Si la commande `git branch --set-upstream-to=origin/master` n'a pas été utilisé, on peut aussi faire lors du premier push `git push --set-upstream origin master`. Après cela, on peut faire un simple `git push`, sinon on est obligé de faire `git push origin master`
 
 
 ## Les commandes "avancées"
@@ -112,23 +133,6 @@ config/application.yml
 *.tmp
 cache/*
 ```
-
-## Créer un nouveau projet
-
-* `git init` : activer un dossier comme repository Git en se plaçant dans le dossier
-Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historique des fichiers et la configuration
-
-* `git remote add origin https://github.com/nomutilisateur/MonProjet.git` : permet de connecter le dépôt local au dépôt distant après le `git init` que l'on vient de créer vide sur GitHub.
-
-* `git branch --set-upstream-to=origin/master` permet d'associer la branche master locale à la branche master du remote
-
-* `git pull` pour récupérer les éventuels fichiers créé avec le projet (README.md et .gitignore). S'il n'y a pas de fichier .gitignore, il faut en créer un pour lister tous les fichiers qui ne doivent pas être versionné.
-
-* `git add .` pour ajouter à l'index Git tous les fichiers créés ou modifiés
-
-* `git commit -m "premier commit du projet"` : crée une version du projet
-
-* `git push` : Lors du premier push, il faut associer la branche master locale avec la branche master du remote. Si la commande `git branch --set-upstream-to=origin/master` n'a pas été utilisé, on peut aussi faire lors du premier push `git push --set-upstream origin master`. Après cela, on peut faire un simple `git push`, sinon on est obligé de faire `git push origin master`
 
 
 ## Les branches
