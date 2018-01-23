@@ -45,9 +45,10 @@ Voici des mots **très importants**, j'insiste !
 
 ### Les listes à puces
 ```
-- Une puce
-- Une autre puce
-- Et encore une autre puce !
+- Une puce
+- Une autre puce
+  - Une puce imbriqué
+  - Une autre puce imbriqué
 ```
 - Une puce
 - Une autre puce
