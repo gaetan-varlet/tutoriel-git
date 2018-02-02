@@ -123,6 +123,7 @@ Il doit au moins y avoir `origin`, qui est le nom par défaut donné par Git au 
 `git show v1.3` permet de voir à quoi correspond cette version.  
 Un tag n'est pas envoyé lors d'un push, il faut le préciser avec l'option --tags : `git push --tags`.  
 `git tag -d NOMTAG` permet de supprimer un tag créer.  
+`git push --tags` permet de pusher les tags sur le dépôt distant
 
 * ignorer des fichiers : créer le fichier **.gitignore** et y lister ligne par ligne
 les fichiers qu'on ne veut pas versionner dans Git, en indiquant leurs chemins complets.
