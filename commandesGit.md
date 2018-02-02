@@ -150,8 +150,8 @@ L'option --set-upstream permet de dire à Git de se souvenir qu'un « git push �
 * `git checkout nouvelle-branche`   permet de se placer dans une autre branche à l'intérieur du repo
 A noter que lorsqu'on fait `git log`, on ne voit que les commits effectués sur la branche sur laquelle on se trouve
 
-* fusionner des branches, par exemple ajouter dans une brancheA les mises à jour faites dans une branche B.
-On se place dans A (`git checkout brancheA`) et on fusionne : `git merge brancheB`
+* fusionner des branches, par exemple ajouter dans une brancheA les mises à jour faites dans le master.
+On se place dans A (`git checkout brancheA`) et on fusionne : `git merge master -m "merge du master dans la brancheA"`
 
 * résoudre les conflits : si en fusionnant Git signale qu'il y a un conflit, il faut ouvrir le fichier en question dans l'éditeur de texte, par exemple Vim (`vim nomFichier.extension`), et choisir quel contenu garder, sauvegarder le fichier et revenir à la console.  
 Une fois le conflit résolu, il faut le dire à dire en faisant un commit sans message (`git commit`), ce qui va permettre à Git de voir que le conflit est résolu et il va proposer un message par défaut qu'on peut personnaliser. On le sauvegarde en tapant `:x`. Git confirme ensuite que les branches sont fusionnés.
