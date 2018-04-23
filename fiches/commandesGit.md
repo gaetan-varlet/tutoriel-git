@@ -3,22 +3,13 @@
 
 ## Introduction
 
-Un logiciel de gestion de version permet de suivre l'évolution d'un fichier texte ligne par ligne
-et garde les anciennes versions de chacun d'eux.  
-Il permet de savoir qui a effectué chaque modification, quand et pourquoi, il permet d'assembler (fusionner)
-des modifications si deux personnes ont travaillé sur le même fichier sans perdre d'information.
+Un gestionnaire de version est un système qui enregistre l’évolution d’un fichier ou d’un ensemble de fichiers au cours du temps de manière à ce qu’on puisse rappeler une version antérieure d’un fichier à tout moment. Un **système de gestion de version** (**VCS** en anglais pour *Version Control System*) permet de savoir qui a effectué chaque modification, quand et pourquoi. Il permet d'assembler des modifications si deux personnes ont travaillé sur le même fichier sans perdre d'information.
 
-
-## Logiciels centralisés versus logiciels distribués
-
-* **centralisés** : un serveur conserve l'historique des versions des fichiers et les utilisateurs ont sur leur poste
-uniquement la dernière version des fichiers
-  * exemple : CVS, SVN
-* **distribués** : il n'y a pas de serveur, chacun possède l'historique de l'évolution des fichiers. Les développeurs se transmettent
-chacun directement les modifications.  
-Dans la pratique, pour les logiciels distribués, on utilise souvent un serveur qui sert de point de rencontre et d'échange entre
-les utilisateurs, qui eux possèdent également l'historique des modifications
-  * exemple : Mercurial, Bazaar, Git
+Les différents types de VCS :
+- **locaux** : une base de données locale conserve les différences versions ou les différences entre versions. Exemple : *RCS*
+- **centralisés**, ou **CVCS** pour *Centralized VCS* : un serveur conserve l'historique des versions des fichiers et les utilisateurs ont sur leur poste
+uniquement la dernière version des fichiers. Exemples : *CVS, SVN, Perforce*
+- **distribués**, **DVCS** pour *Distributed VCS* : comme pour les CVCS, un serveur conserve l'historique. Cependant, les clients n’extraient plus seulement la dernière version d’un fichier, mais ils dupliquent complètement le dépôt. Exemples : *Git, Mercurial, Bazaar, Darcs*
 
 Pour commencer à utiliser Git, on peut :
 * créer un nouveau dépôt, pour commencer un nouveau projet
