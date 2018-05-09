@@ -3,6 +3,8 @@
 
 ## Introduction
 
+### La gestion de version
+
 Un gestionnaire de version est un système qui enregistre l’évolution d’un fichier ou d’un ensemble de fichiers au cours du temps de manière à ce qu’on puisse rappeler une version antérieure d’un fichier à tout moment. Un **système de gestion de version** (**VCS** en anglais pour *Version Control System*) permet de savoir qui a effectué chaque modification, quand et pourquoi. Il permet d'assembler des modifications si deux personnes ont travaillé sur le même fichier sans perdre d'information.
 
 Les différents types de VCS :
@@ -11,9 +13,32 @@ Les différents types de VCS :
 uniquement la dernière version des fichiers. Exemples : *CVS, SVN, Perforce*
 - **distribués**, **DVCS** pour *Distributed VCS* : comme pour les CVCS, un serveur conserve l'historique. Cependant, les clients n’extraient plus seulement la dernière version d’un fichier, mais ils dupliquent complètement le dépôt. Exemples : *Git, Mercurial, Bazaar, Darcs*
 
+### Rudiments de Git
+
+- Git gère et stocke les données comme des instantanés, alors que la plupart des VCS gèrent et stockent des différences de fichiers. Pour être efficace, Git ne stocke pas les fichiers qui n'ont pas changé, mais juste une référence vers l'instantané.
+- Presque toutes les opérations sont locales car l'historique complet est stocké localement, alors qu'avec les CVCS, les opérations passent par le réseau ce qui les ralentit
+- Git gère l'intégrité. Tout est vérifié par une somme de contrôle (empreinte SHA-1 de 40 caractères hexadécimaux) avant d'être stocké, qui sert de référence, ce qui rend impossible la modification d'un fichier ou dossier sans que Git ne s'en aperçoise
+- Les trois états dans Git :
+  - **modifié**, *modified*, signifie que le fichier est modifié mais qu’il n’a pas encore été validé en base
+  - **indexé**, ou *staged*,  signifie que le fichier modifié dans sa version actuelle est marqué pour qu’il fasse partie du prochain instantané du projet
+  - **validé**, ou *committed*, signifie que les données sont stockées en sécurité dans la base de données locale
+- Les trois sections d'un projet Git :
+  - le répertoire de travail, qui est une extraction unique d'une version du projet, extrait depuis la base de données compressée dans le répertoire Git
+  - la zone d'index, qui est un simple fichier, situé dans le répertoire Git, qui stocke les informations concernant ce qui fera partie du prochain instantané
+  - le répertoire Git, est l'endroit où Git stocke les méta-données et la base de données des objets du projet
+- L'utilisation de Git peut se faire de différentes manières : en ligne de commande ou en utilisant une interface graphique
+- Paramètrage à la première utilisation
+  - `git config` permet de voir et modifier les variables de configuration
+  - ces variables sont stockées dans */etc/gitconfig* pour tout le système, dans *~/.gitconfig* pour l'utilisateur, et dans le répertoire Git *.git/config* pour le projet. Chaque niveau surcharge le niveau précédent
+  - sur Windows, Git recherche *.gitconfig* dans le répertoire *$HOME*
+  - configuration de l'identité : `git config --global user.name "John Doe"` et `git config --global user.email johndoe@example.com` permet de renseigner l'identité car toutes les validations Git utilisent cette information. L'option `--global` fait que l'information est enregistré pour tous les projets de l'utilisateur sur la machine. Pour surcharger une valeurs pour un projet spécifique, il faut utiliser la commande sans l'otion `--global`
+  - choisir l'éditeur de texte pour saisir les messages : `git config --global core.editor emacs`
+- Pour vérifier les paramètres, utiliser la commande `git config --list`, certains paramètres apparaissent plusieurs fois car Git lit les paramètres depuis plusieurs fichiers, la dernière valeur est celle utilisée par Git. Pour vérifier la valeur effective, d'un paramètre, utiliser la commande `git config <paramètre>`, par exemple `git config user.name`
+- pour obtenir de l'aide, utiliser la commande `git help <commande>`, par exemple `git help config`
+
 Pour commencer à utiliser Git, on peut :
 * créer un nouveau dépôt, pour commencer un nouveau projet
-* cloner un dépôt existant, c'est-à-dire récupérer l'historique des changements d'un projet pour travailler dessus.
+* cloner un dépôt existant, c'est-à-dire récupérer l'historique des changements d'un projet pour travailler dessus
 
 
 ## Les commandes de base
