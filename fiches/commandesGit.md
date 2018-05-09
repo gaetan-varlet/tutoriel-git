@@ -15,11 +15,11 @@ uniquement la dernière version des fichiers. Exemples : *CVS, SVN, Perforce*
 
 ### Rudiments de Git
 
-- Git gère et stocke les données comme des instantanés, alors que la plupart des VCS gèrent et stockent des différences de fichiers. Pour être efficace, Git ne stocke pas les fichiers qui n'ont pas changé, mais juste une référence vers l'instantané.
+- Git gère et stocke les données comme des instantanés, alors que la plupart des VCS gèrent et stockent des différences de fichiers. Pour être efficace, Git ne stocke pas les fichiers qui n'ont pas changé, mais juste une référence vers l'instantané
 - Presque toutes les opérations sont locales car l'historique complet est stocké localement, alors qu'avec les CVCS, les opérations passent par le réseau ce qui les ralentit
-- Git gère l'intégrité. Tout est vérifié par une somme de contrôle (empreinte SHA-1 de 40 caractères hexadécimaux) avant d'être stocké, qui sert de référence, ce qui rend impossible la modification d'un fichier ou dossier sans que Git ne s'en aperçoise
+- Git gère l'intégrité. Tout est vérifié par une somme de contrôle (empreinte SHA-1 de 40 caractères hexadécimaux) avant d'être stocké, qui sert de référence, ce qui rend impossible la modification d'un fichier ou dossier sans que Git ne s'en aperçoive
 - Les trois états dans Git :
-  - **modifié**, *modified*, signifie que le fichier est modifié mais qu’il n’a pas encore été validé en base
+  - **modifié**, ou *modified*, signifie que le fichier est modifié mais qu’il n’a pas encore été validé en base
   - **indexé**, ou *staged*,  signifie que le fichier modifié dans sa version actuelle est marqué pour qu’il fasse partie du prochain instantané du projet
   - **validé**, ou *committed*, signifie que les données sont stockées en sécurité dans la base de données locale
 - Les trois sections d'un projet Git :
@@ -33,8 +33,8 @@ uniquement la dernière version des fichiers. Exemples : *CVS, SVN, Perforce*
   - sur Windows, Git recherche *.gitconfig* dans le répertoire *$HOME*
   - configuration de l'identité : `git config --global user.name "John Doe"` et `git config --global user.email johndoe@example.com` permet de renseigner l'identité car toutes les validations Git utilisent cette information. L'option `--global` fait que l'information est enregistré pour tous les projets de l'utilisateur sur la machine. Pour surcharger une valeurs pour un projet spécifique, il faut utiliser la commande sans l'otion `--global`
   - choisir l'éditeur de texte pour saisir les messages : `git config --global core.editor emacs`
-- Pour vérifier les paramètres, utiliser la commande `git config --list`, certains paramètres apparaissent plusieurs fois car Git lit les paramètres depuis plusieurs fichiers, la dernière valeur est celle utilisée par Git. Pour vérifier la valeur effective, d'un paramètre, utiliser la commande `git config <paramètre>`, par exemple `git config user.name`
-- pour obtenir de l'aide, utiliser la commande `git help <commande>`, par exemple `git help config`
+- Pour vérifier les paramètres, utiliser la commande `git config --list`, certains paramètres apparaissent plusieurs fois car Git lit les paramètres depuis plusieurs fichiers, la dernière valeur est celle utilisée par Git. Pour vérifier la valeur effective d'un paramètre, utiliser la commande `git config <paramètre>`, par exemple `git config user.name`
+- Pour obtenir de l'aide, utiliser la commande `git help <commande>`, par exemple `git help config`
 
 Pour commencer à utiliser Git, on peut :
 * créer un nouveau dépôt, pour commencer un nouveau projet
