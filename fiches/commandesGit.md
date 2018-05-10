@@ -60,9 +60,18 @@ Pour commencer à utiliser Git, on peut :
   - `git add cheminFichier` permet aussi d'indexer les fichiers modifiés
   - `git add .` indexe tous les fichiers dans le répertoire courant
 
+- ignorer des fichiers : créer le fichier **.gitignore** et y lister ligne par ligne les fichiers qu'on ne veut pas versionner dans Git, en indiquant leurs chemins complets. Il est possible d'utiliser une étoile comme joker. Par exemple :
+```
+motsdepasse.txt
+config/application.yml
+*.tmp
+cache/*
+```
+
 - `git diff` permet d'inspecter les modifications indexées et non indexées
   - `git diff` permet de visualiser ce qui a été modifié mais pas encore indexé
   - `git diff --cached` ou `git diff --staged` permet de visualiser les modifications indexées qui feront partie de la prochaine validation
+  - `git diff fichier` permet de ne voir les modifications que d'un fichier
 
 - `git commit` enregistre les modifications indexées :
   - cela lance l'éditeur par défaut pour que l'on renseigne le message de validation
@@ -79,7 +88,6 @@ Pour commencer à utiliser Git, on peut :
 - déplacer/renommer des fichiers
   - `git mv nomOrigine nomCible` renomme et indexe le fichier
   - si on renomme manuellement le fichier, Git va voir un fichier supprimé et un nouveau fichier, il faut donc en plus supprimer l'ancien nom et ajouter le nouveau nom dans la zone d'index, ce qui fait 3 étapes mais revient au final au même car Git voit que c'est un renommage : `mv nomOrigine nomCible` `git rm nomOrigine` `git add nomCible`
-
 
 - `git pull` : récupère des modifications sur le serveur, penser à se mettre dans le dossier
 
@@ -107,10 +115,6 @@ Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historiq
 
 
 ## Les commandes "avancées"
-
-* `git diff` : permet de voir précisément ce qui a été modifié dans tous les fichiers où il y a eu des modifications,
-les lignes ajoutés sont précédés d'un +, les lignes supprimés précédés d'un -.  
-`git diff fichier` permet de ne voir les modifications que d'un fichier
 
 * `git log` : afficher la liste de tous les commits réalisés.  
 Chaque commit est identifié grâce à un numéro hexadécimal de 40 caractères nommé *SHA-1*.  
@@ -159,15 +163,6 @@ Un tag n'est pas envoyé lors d'un push, il faut le préciser avec l'option --ta
 `git tag -d NOMTAG` permet de supprimer un tag créer.  
 `git push --tags` permet de pusher les tags sur le dépôt distant
 
-* ignorer des fichiers : créer le fichier **.gitignore** et y lister ligne par ligne
-les fichiers qu'on ne veut pas versionner dans Git, en indiquant leurs chemins complets.
-Il est possible d'utiliser une étoile comme joker. Par exemple :
-```
-motsdepasse.txt
-config/application.yml
-*.tmp
-cache/*
-```
 
 
 ## Les branches
