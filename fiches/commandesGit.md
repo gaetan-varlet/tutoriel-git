@@ -41,12 +41,8 @@ uniquement la dernière version des fichiers. Exemples : *CVS, SVN, Perforce*
 ## Les bases de Git
 
 Pour commencer à utiliser Git, on peut :
-- créer un nouveau dépôt, pour commencer un nouveau projet : `git init` en se positionnant dans le répertoire du projet
-- cloner un dépôt existant, c'est-à-dire récupérer l'historique des changements d'un projet pour travailler dessus : `git clone <url>`
-
-- `git clone <url>` : copie un dépôt Git depuis un serveur sur notre machine en SSH ou en HTTPS
-  - attention à se placer au bon endroit sur le disque dur pour copier le dépôt
-  - `git clone <url> nomRepertoire` pour cloner le dépôt dans un répertoire nommé différemment
+- créer un nouveau dépôt, pour commencer un nouveau projet : `git init` en se positionnant dans le répertoire du projet. Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historique des fichiers et la configuration
+- cloner un dépôt existant, c'est-à-dire récupérer l'historique des changements d'un projet pour travailler dessus : `git clone <url>`. `git clone <url> nomRepertoire` permet de cloner le dépôt dans un répertoire nommé différemment
 
 - `git status` : permet de voir l'état des fichiers dans le dépôt local
   - l'état des fichiers : *sous suivi de version* (*tracked*) ou *non suivi* (*untracked*)
@@ -89,12 +85,64 @@ cache/*
   - `git mv nomOrigine nomCible` renomme et indexe le fichier
   - si on renomme manuellement le fichier, Git va voir un fichier supprimé et un nouveau fichier, il faut donc en plus supprimer l'ancien nom et ajouter le nouveau nom dans la zone d'index, ce qui fait 3 étapes mais revient au final au même car Git voit que c'est un renommage : `mv nomOrigine nomCible` `git rm nomOrigine` `git add nomCible`
 
-- `git pull` : récupère des modifications sur le serveur, penser à se mettre dans le dossier
+- `git log` : afficher la liste de tous les commits réalisés en ordre chronologique inversé avec l'identifiant, l'auteur, la date et le message du commit
+  -  appuyer sur *q* pour quitter
+  - `-p` affiche le détail de chaque ligne ajoutée ou retirée
+  - `--stat` pour un résumé plus court des commits en indiquant la liste des fichiers modifiés ainsi que le nombre de lignes ajoutées ou retirées dans les fichiers
+  - `--pretty` permet de modifier la mise en forme du journal des commits
+    - `git log --pretty=oneline` affiche un commit par ligne
+    - l'option format permet de décrire précisément le format de sortie, par exemple `git log --pretty=format:"%h - %an, %ar : %s"`
+  - `--graph` ajoute un graphique pour décrire l'historique des branches et fusions
+  - limiter la longueur de l'historique
+    - `-<n>` affiche les *n* derniers commits, par exemple `git log -2` affiche les 2 derniers commits
+    - `--since` ou `--after` (affiche les commits réalisés après la date spécifiée) et `--until` ou `--before` (affiche les commits réalisés avant la date spécifiée) sont des options de limitation dans le temps
+      - fonctionne avec de nombreux formats : *2.weeks*, *2008-01-05*, *2 years 1 day 3 minutes ago*
+      - exemple : `git log --since=2.weeks`
+    - `--author` permet de filtrer sur un auteur spécifique
+    - `--committer` permet de filtrer sur un validateur spécifique
+    - `--grep` permet de filtrer les commits dont le message contient la chaîne de caractères spécifiée
+    - `-S` permet de filtrer les commits dont les modifications ajoutent ou retirent le texte comportant la chaîne spécifiée, `git log -S"ma chaîne"`
 
-- `git push` envoie le code sur le dépôt distant. Il faut se positonner dans le repo local.  
-Tous les commits du dépôt local sont envoyés vers le dépôt distant.
-La commande complète est `git push [nom-distant] [nom-de-branche]`, par exemple `git push origin master`.  
+- annuler des actions :
+  - modifier le dernier commit : `git commit --amend`
+    - `git commit --amend -m "nouveau message"` modifie le message du dernier commit si aucune modification n'a été réalisée depuis la dernière validation
+    - ajouter un fichier que l'on a oublié d'indexer dans le dernier commit sans créer un nouveau commit : `git commit -m 'validation initiale'`, `git add fichier_oublie`, `git commit --amend`
+  - désindexer un fichier déjà indexé : `git reset HEAD fichier`
+  - réinitialiser un fichier que l'on a modifié et le ramener à son état du dernier instantané `git checkout -- fichier` ou `git checkout fichier`. Toutes les modifications non validées seront alors perdues
 
+- travailler avec les dépôts distants
+  - afficher les dépôts distants : `git remote -v`, l'option *verbose* permet d'afficher l'URL des dépôts distants en plus de leur nom court. *origin* est le nom par défaut du dépôt distant
+  - ajouter un dépôt distant : `git remote add [nomcourt] [url]`, par exemple `git remote add origin https://...`
+  - retirer un dépôt distant : `git remote rm [nomcourt]`
+  - renommer un dépôt distant : `git remote rename ancienNomCourt nouveauNomCourt`
+  - obtenir les données d'un dépôt distant : `git fetch [remote-name]` récupère sur le dépôt distant les données du projet qu'on n'a pas encore récupéré sous une branche spécifique, sans fusionner avec notre copie de travail
+  - obtenir et fusionner automatiquement les données d'un dépôt distant : `git pull`
+  - pousser son travail sur un dépôt distant : `git push`, ou de manière plus complète `git push [nom-distant] [nom-de-branche]`, par exemple `git push origin master`. Il faut d'abord être à jour avec le dépôt distant en ayant tirer et fusionner les modifications du dépôt distant avec notre dépôt local
+  - inspecter un dépôt distant : `git show [nom-distant]` permet d'avoir plus d'informations sur un dépôt distant particulier, notamment la liste des branches suivies
+
+- les étiquettes, ou *tags* en anglais
+  - lister les étiquettes dans l'ordre alphabétique : `git tag`
+    - filtrer les étiquettes, par exemple celles commençant par *v1.8* : `git tag -l 'v1.8*'`
+    - voir à quoi correspond une étiquette : `git show nomTag`
+  - créer des étiquettes
+    - étiquettes annotées, qui ont une somme de contrôle, le nom et l'email du créateur, la date, le message d'étiquetage
+    - étiquettes légères, qui stocke juste la somme de contrôle d'un commit
+      - `git tag nomTag`  ajoute un tag sur le dernier commit
+      - `git tag nomTag idCommit` ajoute un tag sur un commit plus ancien, par exemple `git tag v1.3 2f7c8b3428aca535fdc970feeb4c09efa33d809e`
+  - supprimer une étiquette
+    - `git tag -d nomTag` permet de supprimer une étiquette locale
+  - partager les étiquettes
+    - un tag n'est pas envoyé lors d'un push, il faut le préciser : `git push origin [nom-du-tag]`, ou avec l'option --tags : `git push --tags`
+
+- créer des alias
+  - ce sont des raccourcis pour gagner du temps sur des commandes fréquentes
+  - lister les alias existant : `git config --get-regexp alias` ou `git config --list | grep alias`
+  - définir un alias : `git config --global alias.st status`. On peut donc écrire `git st` à la place de `git status`
+  - quelques alias intéressants :
+    - `git config --global alias.unstage 'reset HEAD --'`, permet de désindexer un fichier avec la commande `git unstage fichier`
+    - `git config --global alias.hist 'log --pretty=format:"%h - %an, %ar : %s"'` permet de voir proprement la liste des derniers commits avec la commande `git hist`
+
+## Les branches avec Git
 
 ## Créer un nouveau projet
 
@@ -115,12 +163,6 @@ Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historiq
 
 
 ## Les commandes "avancées"
-
-* `git log` : afficher la liste de tous les commits réalisés.  
-Chaque commit est identifié grâce à un numéro hexadécimal de 40 caractères nommé *SHA-1*.  
--p pour le détail de chaque ligne ajoutée ou retirée.  
---stat pour un résumé plus court des commits.  
-Appuyer sur *Q* pour quitter
 
 * `git checkout` a un double usage  
   * `git checkout SHADuCommit` : se positionne sur un commit donnée ou dans une branche donnée.  
@@ -150,18 +192,6 @@ Attention, **pop** vide le stash des modifications qu'on a mis dedans. Si on veu
 on peut utiliser à la place `git stash apply`.  
 Si on change de branche avec des changements "non commités", les fichiers modifiés resteront comme ils étaient dans
 la nouvelle branche, ce qui n'est pas ce qu'on souhaite en général.
-
-* `git remote -v` : voir la liste des dépôts distants.    
-Il doit au moins y avoir `origin`, qui est le nom par défaut donné par Git au serveur
-à partir duquel on a cloné le projet.  
--v permet d'afficher l'URL que Git a stocké pour chaque nom court
-
-* `git tag` permet de lister les tags existants.  
-`git tag nomTag idCommit` ajoute un tag sur un commit, par exemple `git tag v1.3 2f7c8b3428aca535fdc970feeb4c09efa33d809e`.  
-`git show v1.3` permet de voir à quoi correspond cette version.  
-Un tag n'est pas envoyé lors d'un push, il faut le préciser avec l'option --tags : `git push --tags`.  
-`git tag -d NOMTAG` permet de supprimer un tag créer.  
-`git push --tags` permet de pusher les tags sur le dépôt distant
 
 
 
