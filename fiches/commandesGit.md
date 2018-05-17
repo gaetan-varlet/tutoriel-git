@@ -144,6 +144,62 @@ cache/*
 
 ## Les branches avec Git
 
+- lors de l'initialisation du repo Git, le code est par défaut dans la branche principale appelée **master**
+- `HEAD` est un pointeur spécial, qui permet de savoir sur quelle branche on se trouve
+- `git branch` affiche la liste des branches (une étoile est placée devant la branche sur laquelle le pointeur HEAD se situe)
+  - `git branch -v` permet de visualiser le dernier commit de chaque branche
+  - `--merged` et `--no-merged` permettent de filtrer les branches selon qu'elles ont été fusionnées avec la branche courante. Exemple `git branch --merged`
+- `git branch [nom-branche]` crée une nouvelle branche
+  - cela crée un nouveau pointeur vers le commit courant
+  - cela ne fait pas basculer la copie de travail vers cette branche
+  - une branche créée est locale, il est ensuite possible de la publier
+- `git branch -d [nom-branche]` supprime une branche locale
+  - si une branche n'a pas encore été fusionné, on ne peut pas la supprimer avec `-d`. Il faut forcer la suppresison avec `-D`
+
+- `git checkout [nom-branche]` permet de changer de branche
+  - avoir sa copie de travail propre au moment de changer de branche
+  - cela déplace *HEAD* sur la branche sur laquelle on va
+  - `git checkout -b [nom-branche]` crée une nouvelle branche et y bascule immédiatement
+
+- fusionner des branches, par exemple ajouter dans une brancheA les mises à jour faites dans le master. On se place dans A (`git checkout brancheA`) et on fusionne : `git merge master -m "merge du master dans la brancheA"`
+  - avance rapide : lorsque l’on cherche à fusionner un commit qui peut être atteint en parcourant l’historique depuis le commit d’origine, Git se contente d’avancer le pointeur car il n’y a pas de travaux divergents à fusionner — ceci s’appelle un fast-forward (avance rapide)
+  - commit de fusion : Git crée un nouvel instantané qui résulte de la fusion à trois sources et crée automatiquement un nouveau commit qui pointe dessus. On appelle ceci un commit de fusion (merge commit) qui est spécial en cela qu’il a plus d’un parent
+
+- résoudre les conflits : si en fusionnant Git signale qu'il y a un conflit, il faut ouvrir le fichier en question et choisir quel contenu garder, sauvegarder le fichier et revenir à la console
+  - Git n’a pas automatiquement créé le commit de fusion. Il a arrêté le processus le temps que vous résolviez le conflit. Si vous voulez vérifier, à tout moment après l’apparition du conflit, quels fichiers n’ont pas été fusionnés, vous pouvez lancer la commande `git status` : tout ce qui comporte des conflits et n’a pas été résolu est listé comme unmerged
+  - Git ajoute des marques de résolution de conflit standards dans les fichiers qui comportent des conflits (<<<<<<<, ======= et >>>>>>>), pour qu'on puisse les ouvrir et résoudre les conflits manuellement. Après avoir résolu chacune de ces sections dans chaque fichier comportant un conflit, lancez `git add` sur chaque fichier pour le marquer comme résolu. Placer le fichier dans l’index marque le conflit comme résolu pour Git.
+  - Une fois les conflits résolu, il faut le dire à dire en faisant un commit, éventuellement sans message car Git propose un message par défaut qu'on peut personnaliser. Git confirme ensuite que les branches sont fusionnés.
+
+- les branches distantes
+  - `git ls-remote [remote]` et `git remote show [remote]` permet d'obtenir les références des éléments (branches, tags...) du dépôt distant [remote]
+  - les branches de suivi
+    - l’extraction d’une branche locale à partir d’une branche distante crée automatiquement ce qu’on appelle une **branche de suivi** (**tracking branch**) et la branche qu’elle suit est appelée **branche amont** (**upstream branch**). Les branches de suivi sont des branches locales qui sont en relation directe avec une branche distante. `git push` et `git pull` fonctionnent directement sans autre configuration
+    - création d'une branche locale de suivi : `git checkout -b [branche] [remote]/[branche]` ou encore `git checkout --track [remote]/[branche]`. La branche locale poussera et tirera automatiquement vers [remote]/[branche]
+    - associer la branche locale sur laquelle on est à une branche distante existante `git branch -u [remote]/[branche]` pu `git branch --set-upstream-to=origin/master`
+    - voir les branches de suivi configuées : `git branch -vv`
+      - quelques infos notamment sur le nombre de commits d'avance et de retard
+      - basé sur l'état de la branche la dernière fois, qu'elle a était synchronisée. Pour mettre à jours toutes les branches distantes depuis les serveurs, faire `git fetch --all`
+  - `git push --set-upstream origin nouvelle-branche` ou `git push -u origin nouvelle-branche` publie la nouvelle branche sur le dépôt distant origin. L'option *--set-upstream* permet de dire à Git de se souvenir qu'un « git push » de notre branche « nouvelle-branche » envoie les changements à la branche « nouvelle-branche » du dépôt distant. Le prochain push pourra donc se faire simplement avec un `git push`
+  - `git push origin -d nom-branche` supprime une branche sur le dépôt distant
+
+- le rebasage
+  - la fusion (`git merge`) crée un nouvel instantané entre les deux derniers instantanés de chaque branche et l'ancêtre commun le plus récent
+    - on a donc dans l'historique des commits de notre branche principale tous les commits de la branche fusionnée + le nouveau commit de fusion
+  - le rebasage (`git rebase`) prend toutes les modifications qui ont été validées sur une branche et les rejoue sur une autre
+    - l'idée est de travailler dans une branche puis de rebaser notre travail sur la branche *master* quand on est prêt à soumettre nos patchs au projet principal, comme ça il y a juste un avance-rapide à faire sur la branche *master* pour intégrer nos modifications faites dans la branche de travail
+    - on rejoue sur la branche *experience* toutes les modifications qui ont été validées sur la branche *master* : `git checkout experience` puis `git rebase master`
+    - on peut retourner sur la branche *master* et faire une **fusion en avance-rapide** : `git checkout master` puis `git merge experience`
+    - on a donc dans l'historique des commits de notre branche principale tous les commits de la branche fusionnée mais pas de commit de fusion
+    - il n'y a pas de différence entre les résultats des deux types d’intégration, mais rebaser rend l’historique plus clair
+  - les dangers du rebasage
+    - ne jamais rebaser des commits qui ont déjà été poussés sur un dépôt public, car rebaser modifie l'historique des commits (on abandonne les commits existants et on en crée de nouveaux qui sont similaires mais différents) et si d'autres personnes se sont basés sur ces commits pour travailler, ça va compliquer leur tâche car ils devront fusionner leur travail avec ce qu'on a rebasé, ce qui peut être compliquer quand on voudra tirer leur travail dans notre dépôt
+    - si on a rebasé une branche qui était déjà poussé sur un dépôt distant, on ne peut plus faire de `git push` car l'historique des commits a été modifié et Git refuse donc le push. On peut faire `git push --force`.
+    - Si on a modifié l'historique des commits, pour éviter les problèmes sur les postes des autres développeurs, il vaut mieux supprimer la branche locale en faisant `git branch -d [branche]`, puis `git pull` pour récupérer les modifications du dépôt distant et enfin un `git checkout [branche]` pour retourner sur la nouvelle version de la branche avec l'historique révisé
+
+
+
+
+
 ## Créer un nouveau projet
 
 * `git init` : activer un dossier comme repository Git en se plaçant dans le dossier
@@ -192,30 +248,3 @@ Attention, **pop** vide le stash des modifications qu'on a mis dedans. Si on veu
 on peut utiliser à la place `git stash apply`.  
 Si on change de branche avec des changements "non commités", les fichiers modifiés resteront comme ils étaient dans
 la nouvelle branche, ce qui n'est pas ce qu'on souhaite en général.
-
-
-
-## Les branches
-
-Lors de l'initialisation du repo Git, le code est par défaut dans la branche principale appelée **master**
-
-* `git branch` affiche la liste des branches (une étoile est placée devant la branche dans laquelle on est)
-
-* `git branch nouvelle-branche` crée une nouvelle branche
-une branche créée est locale, il est ensuite possible de la publier
-
-* `git push --set-upstream origin nouvelle-branche` publie la nouvelle branche sur le remote.  
-L'option --set-upstream permet de dire à Git de se souvenir qu'un « git push » de notre branche « nouvelle-branche » envoie les changements à la branche « nouvelle-branche » du dépôt distant. Le prochain push pourra donc se faire simplement avec un `git push`
-
-* `git checkout nouvelle-branche`   permet de se placer dans une autre branche à l'intérieur du repo
-A noter que lorsqu'on fait `git log`, on ne voit que les commits effectués sur la branche sur laquelle on se trouve
-
-* fusionner des branches, par exemple ajouter dans une brancheA les mises à jour faites dans le master.
-On se place dans A (`git checkout brancheA`) et on fusionne : `git merge master -m "merge du master dans la brancheA"`
-
-* résoudre les conflits : si en fusionnant Git signale qu'il y a un conflit, il faut ouvrir le fichier en question dans l'éditeur de texte, par exemple Vim (`vim nomFichier.extension`), et choisir quel contenu garder, sauvegarder le fichier et revenir à la console.  
-Une fois le conflit résolu, il faut le dire à dire en faisant un commit sans message (`git commit`), ce qui va permettre à Git de voir que le conflit est résolu et il va proposer un message par défaut qu'on peut personnaliser. On le sauvegarde en tapant `:x`. Git confirme ensuite que les branches sont fusionnés.
-
-* `git branch -d nom-branche` supprime une branche locale
-
-* `git push -d origin  nom-branche` supprime une branche sur le remote
