@@ -197,6 +197,49 @@ cache/*
     - Si on a modifié l'historique des commits, pour éviter les problèmes sur les postes des autres développeurs, il vaut mieux supprimer la branche locale en faisant `git branch -d [branche]`, puis `git pull` pour récupérer les modifications du dépôt distant et enfin un `git checkout [branche]` pour retourner sur la nouvelle version de la branche avec l'historique révisé
 
 
+## Git sur le serveur
+
+- les protocoles
+  - **local** : le dépôt distant est un autre répertoire dans le système de fichiers. Système simple utilisant les permissions du système de fichiers, mais peut être difficle de rendre disponible le partage réseau depuis de nombreux endroits plutôt que de gérer un accès réseau
+  - **HTTP** : peut être utilisé de manière anonyme, ou avec authentification (nom d’utilisateur et mot de passe) et chiffrement pour pousser, le tout avec une unique URL. Système très simple, quie l'on peut coupler avec un système de mise en cache d'informations d'authentification pour ne pas s'authentifier à chaque *push*
+  - **SSH** (*Secure Shell*) : protocole authentifié et sécurisé qui a l'inconvéniant de ne pas proposer un accès anonyme au dépôt, même pour un accès en lecture seule
+  - **Git** : protocole géré par un daemon (processus en arrière-plan) livré avec Git. Similaire au protocole SSH, mais non sécurisé. Protocole avec la vitesse de transfert la plus rapide.
+
+- les dépôts nus
+  - un dépôt distant est souvent un dépôt nu (*bare repository*), c'est-à-dire qui n'a pas de copie de travail
+  - par convention, les répertoires de dépôt nu finissent en *.git*
+  - pour installer un serveur Git, il faut créer un dépôt nu en clonant un dépôt existant avec la commande suivante `git clone --bare <url>`, le placer sur un serveur et régler les protocoles
+
+- les clés SSH
+  - stockés par défaut dans *~/.ssh* sous le nom *id_dsa* ou *id_rsa* avec *.pub* pour la clé publique, l'autre étant la clé privée
+  - `ssh-keygen` permet de générer une paire de clé. Il demande deux fois d’entrer un mot de passe qui peut être laissé vide si on ne souhaite pas devoir le taper quand on utilise la clé
+  - il faut ensuite envoyer la clé publique au serveur Git
+
+- GitWeb : interface web de visualisation simpliste
+
+- GitLab
+  - serveur Git plud moderne et complet
+  - application web reposant sur une base de données, installation plus lourde que d'autres serveurs Git
+  - les utilisateurs correspondent à des personnes. Les groupes sont des assemblages de projets, avec un espace de nom de projet comme pour les utilisateurs
+  - un projet correspond à un dépôt Git unique
+
+- site en hébergement externe : simple et rapide à créer, mais les données sont hébergées sur des serveurs tiers. Exemple : GitHub
+
+## Git distribué
+
+- développements distribués
+  - *gestion centralisée* : dépôt central qui accepte le code et tout le monde doit synchroniser son travail avec (classique avec SVN)
+  - *mode du gestionnaire d'intégration* : cloner le dépôt distant du projet (créer un fork), faire des modifications et les pousser sur son propre dépôt distant et ouvrir une requête de tirage (pull requests) depuis notre fork vers le dépôt principal. Le mainteneur du dépôt principal fusionne alors les modifications, ce qui lui permet de garder le contrôle total de ce qui entre dans le dépôt
+  - *mode dictateur et ses lieutenants* : variante utilisé sur les projets immenses comme le noyau Linux. Des gestionnaires d'intégration, appelés *lieutenants*, gèrent une partie du projet et ces lieutenants n'ont qu'un seul gestionnaire d'intégration, *le dictateur bienveillant*. Le dictateur fusionne les branches master de ses lieutenants dans sa propre branche master et la pousse sur le dépôt de référence pour que les développeurs se rebasent dessus
+
+- bonnes pratiques pour créer des commits
+  - ne pas soumettre des patchs comportants des erreurs d'espace (espaces inutiles en fin de ligne ou entralecement d'espaces et de tabulations). `git diff --check` permet de vérifier cela avant chaque validation
+  - faire de chaque validation une modification atomique, en utilisant la zone d'index pour découper le travail en au moins une validation par problème. Cela rend plus simple la vérification par les autres développeurs de notre travail, et l'éventuelle retrait ou inversion ultérieure des modifications. A noter que `git add --patch` permet d'indexer partiellement des fichiers
+  - écrire des messages de validation de qualité, qui décrivent concisément la modification sur une ligne. En plus, on peut ajouter une ligne vide, suivie d'une explication plus détaillée, qui inclue la motivation de la modification en contrastant le nouveau comportement par rapport à l'ancien. Utiliser des verbes substantivés par exemple *Ajout de tests pour ...* au lieu de *j'ai ajouté des tests pour ...*
+
+- contribution à un projet
+  - gestion d'un projet par une petite équipe : on peut avoir une gestion centralisée. Il faut d'abord fusionner les modifications du dépôt distant dans notre dépôt local avant de pouvoir pousser nos modifications, alors qu'avec Subversion la fusion se fait automatiquement quand les fichiers modifiés ne sont pas les mêmes
+  - gestion d'un projet avec une équipe importante : il faut plutôt utiliser le mode du gestionnaire d'intégration. Des petits groupes collaborent sur des fonctionnalités en travaillant dans des branches et des intégrateurs mettent à jour la branche master
 
 
 
@@ -226,8 +269,6 @@ Cela crée un dossier caché *.git* à la racine du projet qui stocke l'historiq
   * `git checkout nomFichier` : le fichier redeviendra comme il était lors du dernier commit
 
 * `git revert SHADuCommit` : "annule un commit" en créant un nouveau commit qui fait l'inverse du précédent
-
-* `git commit --amend -m "nouveau message"` : modifie le message du dernier commit s'il n'a pas encore été pushé
 
 * `git reset HEAD^` : annule le dernier commit et revient à l'avant-dernier.  
 Pour savoir à quel commit revenir, `HEAD` pour le dernier, `HEAD^` pour l'avant-dernier, `HEAD^^` ou `HEAD~2`
