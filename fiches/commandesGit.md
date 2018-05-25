@@ -240,6 +240,25 @@ cache/*
 - contribution à un projet
   - gestion d'un projet par une petite équipe : on peut avoir une gestion centralisée. Il faut d'abord fusionner les modifications du dépôt distant dans notre dépôt local avant de pouvoir pousser nos modifications, alors qu'avec Subversion la fusion se fait automatiquement quand les fichiers modifiés ne sont pas les mêmes
   - gestion d'un projet avec une équipe importante : il faut plutôt utiliser le mode du gestionnaire d'intégration. Des petits groupes collaborent sur des fonctionnalités en travaillant dans des branches et des intégrateurs mettent à jour la branche master
+  - contribution à un projet public : on ne peut pas mettre à jour des branches du projet directement, il faut créer un fork du projet, créer une branche pour faire ses modifications et éventuellement rebaser sa branche sur la branche master du projet principale si celle-ci a avancé. Il faut ensuite notifier le maintenant via une requête de tirage généré via le site web, ou via la commande `git request-pull`
+
+- maintenance d'un projet : il s'agit d'intégrer des contributions
+  - essayer la nouveauté dans une branche créé à partir de master (nommer la branche de manière explicite), ce qui permet de le laisser de côté s'il ne fonctionne pas
+  - application d'un patch reçu par courriel
+    - avec `git apply` si le patch a été généré avec `git diff`
+    - avec `git am` si le patch a été généré avec `format-patch`, qui a l'avantage de contenir le message de validation et l'auteur
+  - patch dans le dépôt public du contributeur
+    - ajouter le dépôt public du contributeur en tant que dépôt distant et tirer localement la branche pour réaliser la fusion
+    - `git diff master...contrib` montre les modifications de la branche thématique a introduite depuis son ancêtre commun avec master
+    - fusionner la branche thématique dans la branche master, ou utiliser le rebasage pour avoir un historique linéaire
+    - on peut aussi introduire des modifications par *picorage* (cherry-pick), c'est-à-dire un rebasage appliqué à un commit unique, si un seul des commits de la branche nous intéresse. Pour cela, lancer la commande `git cherry-pick <SHA-1>` et un nouveau commit sera créé avec la même modification que celle du commit sélectionné
+
+
+## GitHub
+
+- plus grand hébergeur de dépôts Git
+- beaucoup de dépôts Git publics pour les projets open-source
+
 
 
 
