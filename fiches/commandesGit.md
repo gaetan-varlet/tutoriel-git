@@ -254,11 +254,17 @@ cache/*
     - on peut aussi introduire des modifications par *picorage* (cherry-pick), c'est-à-dire un rebasage appliqué à un commit unique, si un seul des commits de la branche nous intéresse. Pour cela, lancer la commande `git cherry-pick <SHA-1>` et un nouveau commit sera créé avec la même modification que celle du commit sélectionné
 
 
-## GitHub
+## Utilitaires Git
 
-- plus grand hébergeur de dépôts Git
-- beaucoup de dépôts Git publics pour les projets open-source
+- `git show <SHA-1 du commit>` affiche le contenu du commit. Les 4 premiers caractères de l'empreinte SHA-1 suffisent si ça ne correspond pas à plusieurs commits
+  - `git show <branche>` affiche le contenu du dernier commit de la branche
+  - `git show HEAD` affiche également le contenu du dernier commit, `HEAD^` ou `HEAD~` pour l'avant-dernier, `HEAD^^` ou `HEAD~2`pour l'avant-avant-dernier...
+- `git log master..experiment` montre les commits accessibles par experiment qui ne le sont pas dans master. Cela permet de savoir quels commits sur la branche n'ont pas encore été fusionné sur la branche principale
+- `git log master...experiment` montre les commits accessibles par l'une des deux références exclusivement, c'est-à-dire qui sont dans experiment et pas dans master, et aussi, absent de experiment et présent dans master
 
+- indexation interactive
+  - `git add -i` ou `--interactive` permet d'entrer en mode interactif
+  - pour indexer partiellement un fichier, taper 5 ou p pour patch en mode interactif. On peut aussi faire `git add -p` ou `--patch`
 
 
 
