@@ -175,7 +175,7 @@ cache/*
   - les branches de suivi
     - l’extraction d’une branche locale à partir d’une branche distante crée automatiquement ce qu’on appelle une **branche de suivi** (**tracking branch**) et la branche qu’elle suit est appelée **branche amont** (**upstream branch**). Les branches de suivi sont des branches locales qui sont en relation directe avec une branche distante. `git push` et `git pull` fonctionnent directement sans autre configuration
     - création d'une branche locale de suivi : `git checkout -b [branche] [remote]/[branche]` ou encore `git checkout --track [remote]/[branche]`. La branche locale poussera et tirera automatiquement vers [remote]/[branche]
-    - associer la branche locale sur laquelle on est à une branche distante existante `git branch -u [remote]/[branche]` pu `git branch --set-upstream-to=origin/master`
+    - associer la branche locale sur laquelle on est à une branche distante existante `git branch -u [remote]/[branche]` ou `git branch --set-upstream-to=origin/master`
     - voir les branches de suivi configuées : `git branch -vv`
       - quelques infos notamment sur le nombre de commits d'avance et de retard
       - basé sur l'état de la branche la dernière fois, qu'elle a était synchronisée. Pour mettre à jours toutes les branches distantes depuis les serveurs, faire `git fetch --all`
@@ -200,8 +200,8 @@ cache/*
 ## Git sur le serveur
 
 - les protocoles
-  - **local** : le dépôt distant est un autre répertoire dans le système de fichiers. Système simple utilisant les permissions du système de fichiers, mais peut être difficle de rendre disponible le partage réseau depuis de nombreux endroits plutôt que de gérer un accès réseau
-  - **HTTP** : peut être utilisé de manière anonyme, ou avec authentification (nom d’utilisateur et mot de passe) et chiffrement pour pousser, le tout avec une unique URL. Système très simple, quie l'on peut coupler avec un système de mise en cache d'informations d'authentification pour ne pas s'authentifier à chaque *push*
+  - **local** : le dépôt distant est un autre répertoire dans le système de fichiers. Système simple utilisant les permissions du système de fichiers, mais peut être difficile de rendre disponible le partage réseau depuis de nombreux endroits plutôt que de gérer un accès réseau
+  - **HTTP** : peut être utilisé de manière anonyme, ou avec authentification (nom d’utilisateur et mot de passe) et chiffrement pour pousser, le tout avec une unique URL. Système très simple, que l'on peut coupler avec un système de mise en cache d'informations d'authentification pour ne pas s'authentifier à chaque *push*
   - **SSH** (*Secure Shell*) : protocole authentifié et sécurisé qui a l'inconvéniant de ne pas proposer un accès anonyme au dépôt, même pour un accès en lecture seule
   - **Git** : protocole géré par un daemon (processus en arrière-plan) livré avec Git. Similaire au protocole SSH, mais non sécurisé. Protocole avec la vitesse de transfert la plus rapide.
 
@@ -218,7 +218,7 @@ cache/*
 - GitWeb : interface web de visualisation simpliste
 
 - GitLab
-  - serveur Git plud moderne et complet
+  - serveur Git plus moderne et complet
   - application web reposant sur une base de données, installation plus lourde que d'autres serveurs Git
   - les utilisateurs correspondent à des personnes. Les groupes sont des assemblages de projets, avec un espace de nom de projet comme pour les utilisateurs
   - un projet correspond à un dépôt Git unique
